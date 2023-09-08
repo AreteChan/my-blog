@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  h1 {
+      @apply text-2xl font-bold;
+  }
+  h2 {
+      @apply text-xl font-bold;
+  }
+  h3 {
+      @apply text-lg font-bold;
+  }
+  h4 {
+      @apply text-base;
+  }
+  h5 {
+      @apply text-sm;
+  }
+  h6 {
+      @apply text-xs;
+  }
+}
+
+
+.flexCenter {
+  @apply flex justify-center items-center
+}
+
+:root {
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"
+}
+
+html,body,#app {
+  height: 100%;
+  overflow: auto;
+}
+
+#app {
+  @apply bg-gray-100
+}
