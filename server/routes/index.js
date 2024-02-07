@@ -3,7 +3,7 @@ const router = express.Router()
 const multer = require('multer')
 const { signup,login,protect,logout,androidLogin,androidSignup,restrictTo } = require('../controllers/userController')
 const { androidHomeFilters,homeFilters, getAllBlogs, getBlog, createBlog, updateBlog, updateLikes } = require('../controllers/blogController')
-const { getReviews, createReview } = require('../controllers/reviewController')
+const { getReviews, createReview, deleteReview } = require('../controllers/reviewController')
 const AppError = require('../utils/appError')
 
 // 认证
@@ -25,6 +25,9 @@ router.get('/blog/:id/updatelikes', updateLikes)
 router.route('/blog/:id/reviews')
   .get(getReviews)
   .post(protect, createReview)
+
+router.route('/blog/:id/reviews/:reviewId')
+  .delete(protect, deleteReview)
 
 // 安卓端
 router.route('/android/login').post(androidLogin)

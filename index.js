@@ -2,8 +2,8 @@ var child_process = require('child_process');
 
 console.log("Node Version: ", process.version);
 
-run_script("back", "yarn", ["dev"]);
-run_script("front", "yarn", ["dev"]);
+run_script("server", "yarn", ["dev"]);
+run_script("client", "yarn", ["dev"]);
 
 console.log ("Continuing to do node things while the process runs at the same time...");
 

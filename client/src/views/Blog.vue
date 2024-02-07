@@ -3,10 +3,14 @@ import { ref, reactive, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import axios from '../utils/axios'
 import showdown from 'showdown'
+import DivInput from '../components/DivInput.vue'
+import Modal from '../components/Modal.vue'
+import state from '../store'
 
 const router = useRouter()
 const route = useRoute()
 const blogID = ref(route.params.id)
+const deleteReviewModal = ref(null)
 
 const data = reactive({
   blog: {},
@@ -43,11 +47,11 @@ watch(blogID, (newVal, oldVal) => {
 })
 
 function createReview() {
-  const content = document.querySelector('.reviewInput').innerText
+  const content = document.querySelector('.divInput').innerText
   if (content === '') return
   axios.post(`/blog/${blogID.value}/reviews`, {content}).then(res => {
     getReviews()
-    document.querySelector('.reviewInput').innerText = ''
+    document.querySelector('.divInput').innerText = ''
   }).catch(err => {
     console.log(err)
     alert('评论失败！')
@@ -63,6 +67,16 @@ function getReviews(){
   }).catch(err => {
     console.log(err)
   })
+}
+
+function deleteReview(reviewID) {
+  deleteReviewModal.value.openModal()
+  // axios.delete(`/blog/${blogID.value}/reviews/${reviewID}`).then(res => {
+  //   getReviews()
+  // }).catch(err => {
+  //   console.log(err)
+  //   alert('删除评论失败！')
+  // })
 }
 
 </script>
@@ -92,17 +106,25 @@ function getReviews(){
         <h2 class="p-4">评论</h2>
         <div v-if="data.relatedBlogs.length && data.relatedBlogs.length === 0" class="p-4 text-lg text-gray-500 border-t">暂无</div>
         <div v-else v-for="review in data.blog.reviews" class="p-4 text-lg border-t" >
-          {{ review.content }}
+          <div class="flex items-center justify-between">
+            <span>{{ review.content }}</span>
+            <font-awesome-icon icon="fa-regular fa-trash-can" 
+              v-if="state.role === 'admin' || state.userID === review.userID._id" 
+              @click="deleteReview(review._id)"
+              class="text-base text-gray-400  cursor-pointer hover:text-gray-600" 
+            />
+          </div>     
           <div class="text-sm text-gray-400 flex justify-between">
             <span>{{ review.time }}</span>
             <span>{{ review.userID.name }}</span>
           </div>
         </div>
         <div class="border-t p-2" >
-          <div type="text" @keyup.ctrl.enter="createReview" placeholder="输入评论，Enter换行，Ctrl+Enter发布" contenteditable="true" class="reviewInput outline-none bg-gray-100 w-full p-2 rounded-lg"></div>
+          <DivInput @keyup.ctrl.enter="createReview" placeholder="输入评论，Enter换行，Ctrl+Enter发布" />
         </div>
       </div>
     </div>
+    <Modal ref="deleteReviewModal"/>
   </div>
 </template>
 
@@ -112,11 +134,4 @@ function getReviews(){
   border-radius: 0 0 0.25rem 0.25rem;
 }
 
-/* 显示placeholder */
-.reviewInput:empty::before {
-  content: attr(placeholder);
-  color: rgb(156 163 175);
-}
-
- 
 </style>

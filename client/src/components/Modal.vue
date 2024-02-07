@@ -4,6 +4,13 @@ import { ref } from 'vue'
 const fadeBG = ref(null)
 const modal = ref(null)
 
+const props = defineProps({
+  confirm: {
+    type: Boolean,
+    default: true
+  }
+})
+
 function closeModal() {
   fadeBG.value.style.display = 'none'
   modal.value.style.display = 'none'
@@ -23,6 +30,10 @@ defineExpose({ openModal, closeModal })
   <div class="modal" ref="modal">
     <button class="closeBtn" @click="closeModal">X</button>
     <slot></slot>
+    <div v-if="confirm === true" class="absolute bottom-4 right-4">
+      <button>取消</button>
+      <button>确定</button>
+    </div>
   </div>
 </template>
 
@@ -46,11 +57,13 @@ defineExpose({ openModal, closeModal })
   background: #fff;
   z-index: 2;
   border-radius: 0.5rem;
-  padding: 2rem;
+  padding: 1rem;
   display: none;
   overflow: auto;
   max-height: 800px;
   max-width: 1500px;
+  min-height: 100px;
+  min-width: 200px;
 }
 
 .closeBtn {

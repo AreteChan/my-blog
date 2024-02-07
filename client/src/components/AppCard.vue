@@ -1,26 +1,26 @@
 <script setup>
-  import { useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 
-  const props = defineProps({
-    imgName: {
-      type: String,
-      required: true
-    },
-    title: {
-      type: String,
-      required: true
-    },
-    link: {
-      type: String,
-      required: true
-    }
-  })
-
-  const router = useRouter()
-
-  function linkToApp() {
-    router.push(`/applets/${props.link}`)
+const props = defineProps({
+  imgName: {
+    type: String,
+    required: true
+  },
+  title: {
+    type: String,
+    required: true
+  },
+  link: {
+    type: String,
+    required: true
   }
+})
+
+const router = useRouter()
+
+function linkToApp() {
+  router.push(`/applets/${props.link}`)
+}
 </script>
 
 <template>

@@ -12,9 +12,10 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 /* import specific icons */
 
 import { faClock, faTag, faEye, faThumbsUp, faComment, faSearch } from '@fortawesome/free-solid-svg-icons'
+import { faTrashCan } from '@fortawesome/free-regular-svg-icons'
 import { faGithub, faGithubAlt, faBilibili } from '@fortawesome/free-brands-svg-icons'
 /* add icons to the library */
-library.add(faClock, faTag, faEye, faThumbsUp, faComment, faSearch, faGithub, faGithubAlt, faBilibili)
+library.add(faClock, faTag, faEye, faThumbsUp, faComment, faSearch, faGithub, faGithubAlt, faBilibili, faTrashCan)
 
 import router from './router'
 import App from './App.vue'

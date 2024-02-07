@@ -27,3 +27,15 @@ exports.createReview = catchAsync(async (req, res, next) => {
     }
   })
 })
+
+exports.deleteReview = catchAsync(async (req, res, next) => {
+  const reviewId = req.params.reviewId
+  const review = await Review.findByIdAndDelete(reviewId)
+  if (!review) {
+    return next(new AppError(`Can't find review with ID ${reviewId}！`, 404))
+  }
+  res.status(200).json({
+    status: 'success',
+    message: "Delete success!"
+  })
+})
